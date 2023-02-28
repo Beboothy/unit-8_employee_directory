@@ -1,0 +1,138 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --dark-grey: #404040;
+  --main-grey: #778;
+}
+
+body {
+  position: relative;
+  background-color: #f4f4f4;
+  padding: 1rem 3rem;
+}
+
+h1, h2, p {
+  font-family: 'Golos Text', sans-serif;
+}
+
+h1 {
+  color: var(--dark-grey);
+  text-transform: uppercase;
+  font-size: clamp(1.5rem, 3.5vmax, 2rem);
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(100, 100, 100, 0.4)
+}
+
+.modal {
+  width: 375px;
+  margin: 15% auto auto;
+  position: relative;
+  text-align: center;
+  background-color: #fff;
+  border: 1px solid var(--main-grey);
+  border-radius: 5px;
+  padding: 30px 20px;
+}
+
+.modal .text-container {
+  margin: .5rem auto;
+  width: 90%;
+}
+
+.avatar {
+  border-radius: 50%;
+}
+
+.modal .avatar {
+  width: 125px;
+  height: 125px;
+}
+
+hr {
+  margin: 2rem 0;
+  border: none;
+  height: .25px;
+  background-color: var(--main-grey);
+}
+
+.address {
+  margin: 1rem 0;
+}
+
+.modal-close {
+  position: absolute;
+  right: 15px;
+  top: 5px;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Grid */
+h1, .grid-container {
+  max-width: 1173.5px;
+  margin-inline: auto;
+}
+
+.grid-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  flex-direction: row;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* cards */
+h2, p {
+  margin: .5rem 0;
+}
+
+h2 {
+  font-size: 19px;
+  color: var(--dark-grey);
+}
+
+p {
+  font-size: 14px;
+  color: var(--main-grey);
+}
+
+.card {
+  width: 375px;
+  padding: 1.5rem 1rem;
+  border-radius: 5px;
+  border: 1px solid var(--main-grey);
+  background-color: #fff;
+  
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.card .avatar {
+  width: 75px;
+  height: 75px;
+}
+
+.card .text-container {
+  width: 250px;
+  margin-left: .5rem;
+}
+
+@media screen and (max-width: 1285px) {
+  h1 {
+    text-align: center;
+  }
+}
