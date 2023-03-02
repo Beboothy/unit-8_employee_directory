@@ -76,7 +76,7 @@ function displayModal(index) {
       <p>${phone}</p>
       <p class="address">${street.number} ${street.name}, ${state} ${postcode}</p>
       <p>Birthday:
-      ${date.getMonth()}/${date.getDate()}/${date.getFullYear()}</p>
+      ${date.getMonth()+ 1}/${date.getDate()}/${date.getFullYear()}</p>
     </div>
   `;
 
@@ -85,20 +85,6 @@ function displayModal(index) {
 }
 
 let currentIndex = 0;
-
-gridContainer.addEventListener('click', e => {
-  // make sure the click is not on the gridContainer itself
-  if (e.target !== gridContainer) {
-    // select the card element based on its proximity to actual element
-    // clicked
-    const card = e.target.closest(".card");
-    const index = card.getAttribute('data-index');
-    displayModal(index);
-    currentIndex = parseInt(index);
-    console.log(currentIndex);
-    return currentIndex;
-  }
-});
 
 modalClose.addEventListener('click', () => {
   overlay.classList.add("hidden");
@@ -128,12 +114,39 @@ createButtons();
 const previousButton = document.getElementById('Previous');
 const nextButton = document.getElementById('Next');
 
+gridContainer.addEventListener('click', e => {
+  // make sure the click is not on the gridContainer itself
+  if (e.target !== gridContainer) {
+    // select the card element based on its proximity to actual element
+    // clicked
+    const card = e.target.closest(".card");
+    const index = card.getAttribute('data-index');
+    displayModal(index);
+    currentIndex = parseInt(index);
+    if (currentIndex === 0) {
+      previousButton.style.display = 'none';
+    };
+    if (currentIndex === 11) {
+      nextButton.style.display = 'none';
+    }
+    console.log(currentIndex);
+    return currentIndex;
+  }
+});
+
 previousButton.addEventListener('click', () => {
   if (currentIndex > 0) {
     currentIndex = currentIndex - 1;
     modalContainer.innerHTML = '';
     console.log(currentIndex);
     displayModal(currentIndex);
+
+    nextButton.style.display = 'inline-block';
+
+    if (currentIndex === 0) {
+      previousButton.style.display = 'none';
+    };
+
     return currentIndex;
   }
 });
@@ -144,6 +157,13 @@ nextButton.addEventListener('click', () => {
     console.log(currentIndex);
     modalContainer.innerHTML = '';
     displayModal(currentIndex);
+
+    previousButton.style.display = 'inline-block';
+
+    if (currentIndex === 11) {
+      nextButton.style.display = 'none';
+    }
+
     return currentIndex;
   }
 });
