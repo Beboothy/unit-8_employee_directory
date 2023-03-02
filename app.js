@@ -15,6 +15,7 @@ fetch(urlAPI)
 
 function displayEmployees(employeeData) {
   employees = employeeData;
+  console.log(employees);
   // store the employee HTML as we create it
   let employeeHTML = '';
   // loop through each employee and create HTML markup
@@ -37,6 +38,25 @@ function displayEmployees(employeeData) {
   });
 
   gridContainer.innerHTML = employeeHTML;
+}
+
+// search filter
+function filterEmployees() {
+  var input, filter, cards, name, txtValue;
+  input = document.getElementById('Search');
+  filter = input.value.toLowerCase();
+  cards = gridContainer.getElementsByClassName('card');
+
+  for ( i = 0; i < cards.length; i++ ) {
+    name = cards[i].getElementsByTagName('h2')[0];
+    txtValue = name.textContent || name.innerText;
+
+    if ( txtValue.toLowerCase().indexOf(filter) > -1 ) {
+      cards[i].style.display = "";
+    } else {
+      cards[i].style.display = "none";
+    }
+  }
 }
 
 function displayModal(index) {
@@ -64,6 +84,8 @@ function displayModal(index) {
   modalContainer.innerHTML = modalHTML;
 }
 
+let currentIndex = 0;
+
 gridContainer.addEventListener('click', e => {
   // make sure the click is not on the gridContainer itself
   if (e.target !== gridContainer) {
@@ -72,9 +94,56 @@ gridContainer.addEventListener('click', e => {
     const card = e.target.closest(".card");
     const index = card.getAttribute('data-index');
     displayModal(index);
+    currentIndex = parseInt(index);
+    console.log(currentIndex);
+    return currentIndex;
   }
 });
 
 modalClose.addEventListener('click', () => {
   overlay.classList.add("hidden");
+});
+
+// generate buttons next to modal that will swap between employees
+const modal = document.getElementById('Modal');
+
+function createButtons() {
+  let previousButton = document.createElement('button');
+  previousButton.id = 'Previous';
+  previousButton.innerText = '<';
+
+  let nextButton = document.createElement('button');
+  nextButton.id = 'Next';
+  nextButton.innerText = '>';
+
+  let flexDiv = document.createElement('div');
+  flexDiv.className = "button_flex";
+  overlay.appendChild(flexDiv);
+  flexDiv.appendChild(previousButton);
+  flexDiv.appendChild(nextButton);
+}
+
+createButtons();
+
+const previousButton = document.getElementById('Previous');
+const nextButton = document.getElementById('Next');
+
+previousButton.addEventListener('click', () => {
+  if (currentIndex > 0) {
+    currentIndex = currentIndex - 1;
+    modalContainer.innerHTML = '';
+    console.log(currentIndex);
+    displayModal(currentIndex);
+    return currentIndex;
+  }
+});
+
+nextButton.addEventListener('click', () => {
+  if (currentIndex < 11) {
+    currentIndex = currentIndex + 1;
+    console.log(currentIndex);
+    modalContainer.innerHTML = '';
+    displayModal(currentIndex);
+    return currentIndex;
+  }
 });
